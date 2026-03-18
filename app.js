@@ -44,8 +44,7 @@ function showUserSection() {
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('user-section').style.display = 'flex';
     
-    document.getElementById('user-name').textContent = '👤 ' + currentUser.name;
-    document.getElementById('user-position').textContent = '🔹 ' + currentUser.position;
+    document.getElementById('user-name').textContent = '🔹 ' + currentUser.position;
     
     // Apply permissions
     applyPermissions();
