@@ -3,74 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>วังปริงแคมป์ - ตารางจองห้องพัก</title>
+    <title>วังปริงแคมป์ทุ่งสง - ระบบจัดการ</title>
     <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>🏕️ วังปริงแคมป์ ทุ่งสง</h1>
-        <p>ตารางจองห้องพักประจำเดือน</p>
-        
-        <!-- User Info Section -->
-        <div id="user-section" style="display: none; margin-top: 20px;">
-            <div class="user-info">
-                <span id="user-name"></span>
-                <span class="user-position" id="user-position"></span>
-            </div>
-            <button id="logout-btn" class="logout-btn">ออกจากระบบ</button>
-        </div>
-        
-        <!-- Login Link (show when not logged in) -->
-        <div id="login-section" style="margin-top: 20px;">
-            <a href="login.html" class="login-link">🔐 เข้าสู่ระบบ</a>
-        </div>
-    </header>
-
-    <main>
-        <section class="calendar-section">
-            <h2>📅 เลือกเดือน</h2>
-            <div class="month-selector">
-                <button class="month-btn" data-month="Jan">ม.ค.</button>
-                <button class="month-btn" data-month="Feb">ก.พ.</button>
-                <button class="month-btn active" data-month="Mar">มี.ค.</button>
-                <button class="month-btn" data-month="Apr">เม.ย.</button>
-                <button class="month-btn" data-month="May">พ.ค.</button>
-            </div>
-        </section>
-
-        <section class="bookings-section">
-            <h2>📋 รายการจอง</h2>
-            <div id="bookings-container">
-                <p class="loading">กำลังโหลดข้อมูล...</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>📅 ข้อมูลอัปเดตล่าสุด: มีนาคม 2026</p>
-    </footer>
-
-    <script src="app.js"></script>
-    
     <style>
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        #user-name {
-            font-size: 1.1rem;
-            font-weight: 600;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c42 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .user-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-flex;
         }
         
         .user-position {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.9rem;
+            font-weight: 600;
         }
         
         .logout-btn {
@@ -80,7 +64,6 @@
             padding: 8px 20px;
             border-radius: 20px;
             cursor: pointer;
-            margin-left: 15px;
             transition: all 0.3s;
         }
         
@@ -88,28 +71,148 @@
             background: rgba(255,255,255,0.3);
         }
         
-        .login-link {
-            color: white;
-            text-decoration: none;
-            background: rgba(255,255,255,0.2);
-            padding: 10px 25px;
-            border-radius: 25px;
+        .menu-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .menu-section h2 {
+            color: #1a472a;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .menu-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .menu-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
+            color: #333;
         }
         
-        .login-link:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
+        .menu-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #4a7c42;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
         }
         
-        /* Permission-based UI */
-        .requires-permission {
-            display: none;
+        .menu-icon {
+            font-size: 2rem;
         }
         
-        .has-permission {
-            display: block;
+        .menu-text {
+            flex: 1;
+        }
+        
+        .menu-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a472a;
+        }
+        
+        .menu-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .menu-arrow {
+            font-size: 1.2rem;
+            color: #4a7c42;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
         }
     </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.jpg" alt="วังปริงแคมป์" class="logo">
+            <h1>ระบบวังปริงแคมป์ทุ่งสง</h1>
+            
+            <div class="user-panel" id="user-panel">
+                <span class="user-position" id="user-position">Loading...</span>
+                <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+            </div>
+        </header>
+        
+        <section class="menu-section">
+            <h2>📋 เมนูหลัก</h2>
+            
+            <div class="menu-grid">
+                <a href="https://mildnattakorn.github.io/wangpring-booking/" target="_blank" class="menu-btn">
+                    <span class="menu-icon">📅</span>
+                    <div class="menu-text">
+                        <div class="menu-title">ข้อมูลการจองห้องพัก</div>
+                        <div class="menu-desc">ดูและจัดการข้อมูลการจอง</div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+                
+                <a href="index_bookings.html" class="menu-btn">
+                    <span class="menu-icon">📊</span>
+                    <div class="menu-text">
+                        <div class="menu-title">Dashboard</div>
+                        <div class="menu-desc">ภาพรวมการจองประจำวัน</div>
+                    </div>
+                    <span class="menu-arrow">→</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Check authentication
+        let currentUser = null;
+        
+        function checkAuth() {
+            let userData = localStorage.getItem('currentUser');
+            const rememberMe = localStorage.getItem('rememberMe') === 'true';
+            
+            if (!userData) {
+                userData = sessionStorage.getItem('currentUser');
+            }
+            
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                showUserInfo();
+            } else {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        function showUserInfo() {
+            document.getElementById('user-position').textContent = '🔹 ' + currentUser.position;
+        }
+        
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('rememberMe');
+            sessionStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+        
+        // Initialize
+        checkAuth();
+    </script>
 </body>
 </html>
