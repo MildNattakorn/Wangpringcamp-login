@@ -176,6 +176,13 @@
                 
                 <button type="submit" class="submit-btn">เข้าสู่ระบบ</button>
                 
+                <div style="margin-top: 15px; text-align: left;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="rememberMe" style="width: 18px; height: 18px;">
+                        <span style="font-size: 0.9rem;">จดจำการเข้าสู่ระบบ</span>
+                    </label>
+                </div>
+                
                 <p id="errorMsg" class="error-msg">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
             </form>
         </div>
@@ -216,9 +223,20 @@
                         name: user.name,
                         position: user.position,
                         role: user.role,
-                        permissions: user.permissions
+                        permissions: user.permissions,
+                        loginTime: Date.now()
                     };
-                    localStorage.setItem('currentUser', JSON.stringify(userData));
+                    
+                    const rememberMe = document.getElementById('rememberMe').checked;
+                    if (rememberMe) {
+                        // Save for 30 days
+                        localStorage.setItem('currentUser', JSON.stringify(userData));
+                        localStorage.setItem('rememberMe', 'true');
+                    } else {
+                        // Save for session only
+                        sessionStorage.setItem('currentUser', JSON.stringify(userData));
+                    }
+                    
                     window.location.href = 'index.html';
                 } else {
                     document.getElementById('errorMsg').classList.add('show');

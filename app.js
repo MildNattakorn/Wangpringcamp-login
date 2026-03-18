@@ -29,10 +29,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Check authentication status
 function checkAuth() {
-    const userData = localStorage.getItem('currentUser');
+    // Check localStorage first (Remember Me)
+    let userData = localStorage.getItem('currentUser');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+    
+    // If not in localStorage, check sessionStorage
+    if (!userData) {
+        userData = sessionStorage.getItem('currentUser');
+    }
     
     if (userData) {
         currentUser = JSON.parse(userData);
+        
+        // If Remember Me is on, ensure it's in localStorage
+        if (rememberMe && !localStorage.getItem('currentUser')) {
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+        
         showUserSection();
     } else {
         showLoginSection();
@@ -75,7 +88,10 @@ function setupLogout() {
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
+            // Clear both localStorage and sessionStorage
             localStorage.removeItem('currentUser');
+            localStorage.removeItem('rememberMe');
+            sessionStorage.removeItem('currentUser');
             window.location.href = 'login.html';
         });
     }
