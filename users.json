@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin01",
+      "name": "สมชาย ใจดี",
+      "position": "เจ้าของ",
+      "role": "owner",
+      "permissions": ["view_bookings", "manage_bookings", "manage_users", "view_reports"]
+    },
+    {
+      "username": "manager",
+      "password": "wpc0",
+      "name": "วิชัย รักเงิน",
+      "position": "ผู้จัดการ",
+      "role": "manager",
+      "permissions": ["view_bookings", "manage_bookings", "view_reports"]
+    },
+    {
+      "username": "staff",
+      "password": "test01",
+      "name": "สมศักดิ์ มาดี",
+      "position": "บุคคลภายนอก",
+      "role": "external",
+      "permissions": ["view_bookings"]
+    }
+  ]
+}

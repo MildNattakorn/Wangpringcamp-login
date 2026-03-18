@@ -1,0 +1,210 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+/* Month Selector */
+.month-selector {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.month-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    background: #f0f0f0;
+    color: #666;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.month-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.month-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Bookings Container */
+#bookings-container {
+    display: grid;
+    gap: 15px;
+}
+
+.booking-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 5px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.booking-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.booking-card.room-A { border-left-color: #ff6b6b; }
+.booking-card.room-B { border-left-color: #4ecdc4; }
+.booking-card.room-C { border-left-color: #45b7d1; }
+.booking-card.room-F { border-left-color: #f9ca24; }
+.booking-card.room-H { border-left-color: #6c5ce7; }
+.booking-card.room-ลาน { border-left-color: #00b894; }
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.room-badge {
+    background: #667eea;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.booking-name {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.booking-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-item .label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.detail-item .value {
+    color: #333;
+    font-weight: 500;
+}
+
+.remark {
+    margin-top: 12px;
+    padding: 10px;
+    background: #fff3cd;
+    border-radius: 8px;
+    color: #856404;
+    font-size: 0.9rem;
+}
+
+.phone-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.phone-link:hover {
+    text-decoration: underline;
+}
+
+.loading {
+    text-align: center;
+    color: #666;
+    padding: 40px;
+    font-size: 1.1rem;
+}
+
+.no-data {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+}
+
+footer {
+    text-align: center;
+    color: white;
+    opacity: 0.8;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .month-btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+    
+    .booking-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
