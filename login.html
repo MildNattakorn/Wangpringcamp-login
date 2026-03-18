@@ -4,138 +4,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เข้าสู่ระบบ - วังปริงแคมป์</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c42 50%, #2d5a27 100%);
+            padding: 20px;
         }
         
-        .login-container {
+        .login-card {
             background: white;
-            padding: 2.5rem;
-            border-radius: 16px;
+            padding: 40px 50px;
+            border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
             width: 100%;
             max-width: 400px;
         }
         
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
         }
         
-        .login-header h1 {
-            color: #1a1a2e;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+        .title {
+            color: #1a472a;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
         }
         
-        .login-header p {
-            color: #666;
+        .login-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c42 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.4);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 350px;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
         }
         
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 15px;
+            text-align: left;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 5px;
             color: #333;
             font-weight: 500;
         }
         
         .form-group input {
             width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid #e1e1e1;
+            padding: 12px;
+            border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
         }
         
         .form-group input:focus {
             outline: none;
-            border-color: #4a90d9;
+            border-color: #4a7c42;
         }
         
-        .login-btn {
+        .submit-btn {
             width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #4a90d9, #357abd);
+            padding: 12px;
+            background: #2d5a27;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
         }
         
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(74, 144, 217, 0.4);
-        }
-        
-        .error-message {
-            background: #fee;
-            color: #c33;
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            text-align: center;
+        .error-msg {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 10px;
             display: none;
         }
         
-        .error-message.show {
+        .error-msg.show {
             display: block;
-        }
-        
-        .back-link {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        
-        .back-link a {
-            color: #4a90d9;
-            text-decoration: none;
-        }
-        
-        .back-link a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <h1>🏕️ วังปริงแคมป์</h1>
-            <p>เข้าสู่ระบบ</p>
-        </div>
-        
-        <div id="error-message" class="error-message"></div>
-        
-        <form id="login-form">
-            <div class="form-group">
-                <label for="username">ชื่อผู้ใช้</label>
-                <input type="text" id="username" name="username" required autocomplete="username">
-            </div>
+    <div class="login-card">
+        <div class="logo">🏕️</div>
+        <h1 class="title">ระบบวังปริงแคมป์ทุ่งสง</h1>
+        <a href="#" class="login-btn" onclick="showLoginModal()">เข้าสู่ระบบ</a>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeLoginModal()">✕</span>
+            <h2 style="margin-bottom: 20px; color: #2d5a27;">🔐 เข้าสู่ระบบ</h2>
             
-            <div class="form-group">
-                <label for="password">รหัสผ่าน</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password">
-            </div>
-            
-            <button type="submit" class="login-btn">เข้าสู่ระบบ</button>
-        </form>
-        
-        <div class="back-link">
-            <a href="index.html">← กลับหน้าหลัก</a>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้</label>
+                    <input type="text" id="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">เข้าสู่ระบบ</button>
+                
+                <p id="errorMsg" class="error-msg">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
+            </form>
         </div>
     </div>
 
@@ -146,12 +187,22 @@
             window.location.href = 'index.html';
         }
 
-        document.getElementById('login-form').addEventListener('submit', async function(e) {
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.add('show');
+            document.getElementById('username').focus();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('show');
+            document.getElementById('loginForm').reset();
+            document.getElementById('errorMsg').classList.remove('show');
+        }
+
+        async function handleLogin(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
-            const errorEl = document.getElementById('error-message');
             
             try {
                 const response = await fetch('users.json');
@@ -160,7 +211,6 @@
                 const user = data.users.find(u => u.username === username && u.password === password);
                 
                 if (user) {
-                    // Store user info (without password)
                     const userData = {
                         name: user.name,
                         position: user.position,
@@ -168,26 +218,22 @@
                         permissions: user.permissions
                     };
                     localStorage.setItem('currentUser', JSON.stringify(userData));
-                    
-                    // Redirect to main page
                     window.location.href = 'index.html';
                 } else {
-                    errorEl.textContent = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
-                    errorEl.classList.add('show');
+                    document.getElementById('errorMsg').classList.add('show');
                 }
             } catch (err) {
-                errorEl.textContent = 'เกิดข้อผิดพลาด กรุณาลองใหม่';
-                errorEl.classList.add('show');
+                document.getElementById('errorMsg').textContent = 'เกิดข้อผิดพลาด กรุณาลองใหม่';
+                document.getElementById('errorMsg').classList.add('show');
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
             }
         });
-
-        // Hide error when typing
-        document.getElementById('username').addEventListener('input', hideError);
-        document.getElementById('password').addEventListener('input', hideError);
-
-        function hideError() {
-            document.getElementById('error-message').classList.remove('show');
-        }
     </script>
 </body>
 </html>
